@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>${num1} + ${num2} = ${sum}</h1>
-
+	<h1>${num1} + ${num2} = ${sum}</h1>
 
 
 </body>
