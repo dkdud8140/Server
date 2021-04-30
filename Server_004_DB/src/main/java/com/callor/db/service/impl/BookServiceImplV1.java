@@ -105,7 +105,7 @@ public class BookServiceImplV1 implements BookService {
 				// result.next();
 
 				BookVO bookVO = new BookVO();
-				// ↓칼럼이름
+													// ↓칼럼이름
 				bookVO.setBk_isbn(result.getString("bk_isbn"));
 				bookVO.setBk_title(result.getNString("bk_title"));
 				bookVO.setBk_ccode(result.getNString("bk_ccode"));
