@@ -26,8 +26,8 @@ public class BookServiceImplV1 implements BookService {
 		// JAva9 이상에서는 jsbc.OracleDriver를 사용한다.
 
 		/*
-		 * WAS 프로젝트에서 ojdbc6.jar를 사용할 경우 오류가 발생한다면 Tomcat 폴더의 lib폴더에 ojdbc6.jar를 복사해 넣을
-		 * 것.
+		 * WAS 프로젝트에서 ojdbc6.jar를 사용할 경우 오류가 발생한다면 
+		 * Tomcat 폴더의 lib폴더에 ojdbc6.jar를 복사해 넣을 것.
 		 */
 
 		// oracle.jdbc.driver.OracleDriver
@@ -131,7 +131,7 @@ public class BookServiceImplV1 implements BookService {
 		return null;
 	}
 
-	// bk_sibn = 1 OR 1 =1 : 모든 데이터가 다 노출되었다.와 좆됨;
+	// bk_sibn = 1 OR 1 =1 : 모든 데이터가 다 노출되었다.
 	@Override
 	public BookVO findById(String bk_isbn) {
 		// TODO ISBN으로 도서 정보 조회 후 데이터 RETURN
