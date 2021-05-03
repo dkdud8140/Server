@@ -83,8 +83,9 @@ public class BookServiceImplV1 implements BookService {
 		// url을 통해 DB로 전송하기 위하여 packing하라
 
 		/*
-		 * packet으로 만들어라 == 네트워크를 통해서 데이터를 주고 받으려면 데이터 외에 여러가지 정보들이 포함되어야 한다 받는 곳 주소,
-		 * 보내는 곳 주소 등
+		 * packet으로 만들어라 == 네트워크를 통해서 데이터를 주고 받으려면 
+		 * 데이터 외에 여러가지 정보들이 포함되어야 한다 
+		 * 받는 곳 주소, 보내는 곳 주소 등
 		 * 
 		 * 이건 굉장히 복잡한 과정이기때문에 PreparedStatemen를 이용하여 간단하게 해결한다/.
 		 */
