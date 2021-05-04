@@ -117,7 +117,14 @@ public class BookRentServiceImplV1 implements BookRentService {
 			
 			// PK값으로 검색해서 List에는 1번밖에 데이터가 없다
 			// List의 0번 데이터만 getter하여 DTO에 담기
-			BookRentDTO brDTO = this.select(pStr).get(0);
+//			BookRentDTO brDTO = this.select(pStr).get(0);
+			
+			List<BookRentDTO>brList = this.select(pStr);
+			BookRentDTO brDTO = null ;
+			if(brList != null && brList.size()>0) {
+				brDTO = brList.get(0);
+			}
+			
 			pStr.close();
 			return brDTO ;
 			
