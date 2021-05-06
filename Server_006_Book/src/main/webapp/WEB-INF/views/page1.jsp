@@ -37,10 +37,20 @@ Tomcat 5.5. 2006부터 사용하는 톰캣
 	<%--
 	for(BuyerDTO d : buList) {}
 	 --%>
+	 
+	 <%--
+	 items = "Controller에서 받은 list, 배열"
+	 List를 전체 반복하면서 각각의 요소를 getter하여
+	 var로 지정된 변수에 담기
+	 EL tag를 사용하여 각각의 변수를 화면에 출력
+	  --%>
 	<c:forEach items="${BUYERS}" var = "BUYER">
 		<p>${BUYER.bu_code},
 		<a href = "page2?bu_code=${BUYER.bu_code}">${BUYER.bu_name}</a>,
-		${BUYER.bu_birth},${BUYER.bu_tel}, ${BUYER.bu_addr}</p>
+		
+		${BUYER.bu_birth},
+		${BUYER.bu_tel}, 
+		${BUYER.bu_addr}</p>
 	</c:forEach>
 </body>
 </html>

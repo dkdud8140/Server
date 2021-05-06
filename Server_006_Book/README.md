@@ -35,12 +35,24 @@
 
 
 
+## WAS 프로젝트에서 /webapp/WEB-INF 폴더
+* MVC 패턴의 프로젝트에서는 모든 요청을 반드시 Controller 클래스에서 처리하고,
+	사용자에게 보여주는 부분은 jsp 파일에서 처리하도록 작성
+* 전통적인 WAS 프로젝트에서는 /webapp 폴더에 jsp파일을 저장하는데,
+	webapp 폴더에 저장된 jsp 파일은 web browser에서 직접 호출하여 사용할 수 있다.
+* jsp를 직접 호출하여 작동시키는 방식은 보안 등의 문제,
+	대형 프로젝트의 작성을 어렵게 만드는 요인이다. 
+* MVC 패턴에서는 jsp 파일을 직접 호출하지 못하도록 한다.
+* WEB - INF 폴더에 views 폴더를 만들고 jsp 를 저장하면 web browser 에서 직접 jsp를 호출할 수 없게 된다.
+WEB-INF는 프로젝트의 Controller 클래스에서만 접근할 수 있도록 되어 있다.
 
+* jsp 파일을 모두 web-INF 폴더 아래에 두고 프로젝트를 진행한다
+* MVC 패턴에서는 개발자와 디자이너가 협업을 쉽게 할 수 있ㄷ도록 연산을 담당하는
+Controller는 기능을 간화하고, jsp 파일은 보여주는 용도로만 기능을 제한한다.
 
+* MVC 패턴을 준수하면 프로젝트가 대형화 되어 갈 수 록 효과가 나타난다. 
 
-
-
-
+* Controller 에서 WEB-INF 폴더 아래의 jsp를 호출하려면 RequestDispatcher 클래스를 사용하여 접근한다.
 
 
 

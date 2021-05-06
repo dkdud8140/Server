@@ -2,6 +2,8 @@ package com.collar.book.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,10 +14,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.collar.book.model.BookDTO;
 import com.collar.book.model.BookRentDTO;
 import com.collar.book.model.BookRentVO;
 import com.collar.book.model.BuyerDTO;
 import com.collar.book.service.BookRentService;
+import com.collar.book.service.BookService;
+import com.collar.book.service.BookServiceImplV1;
 import com.collar.book.service.BuyerService;
 import com.collar.book.service.impl.BookRentServiceImplV1;
 import com.collar.book.service.impl.BuyerServiceImplV1;
@@ -30,10 +35,12 @@ public class BookRentController extends HttpServlet {
 
 	protected BookRentService brSer;
 	protected BuyerService buSer;
+	protected BookService bkSer;
 
 	public BookRentController() {
 		brSer = new BookRentServiceImplV1();
 		buSer = new BuyerServiceImplV1();
+		bkSer = new BookServiceImplV1();
 	}
 
 	@Override
@@ -86,7 +93,7 @@ public class BookRentController extends HttpServlet {
 				// app에 setting한 Book 변수와 함께 랜더링 하라
 				// wepapp/WEB-INF/views/book.jsp 파일을 읽어서
 				// JAVA 코드로 변환하고, 실행할 준비를 하라
-				RequestDispatcher disp = app.getRequestDispatcher("/WEB-INF/views/book.jsp");
+				RequestDispatcher disp = app.getRequestDispatcher("/WEB-INF/views/order_info.jsp");
 
 				// 랜더링한 view 데이터를 웹 브라우저로 response하라
 				disp.forward(req, resp);
@@ -129,9 +136,15 @@ public class BookRentController extends HttpServlet {
 				}
 				System.out.println("=".repeat(50));
 
-				ServletContext app = req.getServletContext();
-				app.setAttribute("BUYERS", buList);
+				// ServletContext를 생성하여 속성(변수) 셋팅하기
+//				ServletContext app = req.getServletContext();
+//				app.setAttribute("BUYERS", buList);
 
+				//req 객체에 바로 세팅하기
+				req.setAttribute("BUYERS", buList);
+				
+				//page1.jsp 파일을 열고 BUYERS 변수와 함꼐
+				// 랜더링하여 HTML 코드를 생성하라
 				RequestDispatcher disp = req.getRequestDispatcher("/WEB-INF/views/page1.jsp");
 				disp.forward(req, resp);
 			} 
@@ -139,14 +152,81 @@ public class BookRentController extends HttpServlet {
 		} else if(subPath.equals("/order/page2")) {
 		
 			String bu_code = req.getParameter("bu_code") ;
+			
+			//bu_code 값에 해당하는 회원정보 추출
 			BuyerDTO buyerDTO = buSer.findById(bu_code);
 			
-			ServletContext app = req.getServletContext();
-			app.setAttribute("BUYER", buyerDTO);
+			if(buyerDTO != null) {
+				//bu_code 값에 해당하는 회원정ㅌ보가 있으면
+				// 콘솔에 출력
+				System.out.println(buyerDTO.toString());
+			}
+			
+//			ServletContext app = req.getServletContext();
+//			app.setAttribute("BUYER", buyerDTO);
+
+			req.setAttribute("BUYER", buyerDTO);
 			
 			RequestDispatcher disp = req.getRequestDispatcher("/WEB-INF/views/page2.jsp");
 			disp.forward(req, resp);
 			
+		
+		} else if(subPath.equals("/order/book")) {
+			String bu_code = req.getParameter("bu_code");
+			String bk_title = req.getParameter("bk_title") ;
+			
+			if(bk_title == null || bk_title.equals("")) {
+				out.print("도서명을 입력하세요");
+				out.close();
+			} else {
+				
+				//회원정보를 한 번 더 조회
+				BuyerDTO buDTO = buSer.findById(bu_code);
+				req.setAttribute("BUYER", buDTO);
+				
+				
+				List<BookDTO> bookList = bkSer.findByTitle(bk_title);
+				
+				// method chaining 방식으로 연속 호출하기
+				req.setAttribute("BOOKS", bookList);
+				req.getRequestDispatcher("/WEB-INF/views/book.jsp").forward(req, resp);
+			}
+		
+			
+			
+			
+		} else if(subPath.equals("/order/insert")) {
+			
+			String bk_isbn = req.getParameter("bk_isbn");
+			String bu_code = req.getParameter("bu_code");
+			
+			//대여일자값을 생성하기 위하여
+			// 날짜 클래스와 날짜포맷클래스를 사용하여
+			//대여일자 문자열 만들기
+			Date date = new Date(System.currentTimeMillis()); // 현재 컴퓨터의 시스템 날짜 가져오기
+			
+			//날짜 데이터를 문자열로 변환하기 위한 설정
+			SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+			
+			//날짜 데이터를 설정한 포맷대로 문자열로 변환
+			String sDate = sd.format(date);
+			System.out.println("대여일자 : " + sDate);
+			
+			//INSERT를 수행하기 위해 VO를 맍들고 Web에서 전달받은 
+			//도서 ISBN과 회원 code를 setting
+			BookRentVO brVO = new BookRentVO();
+			brVO.setBr_sdate(sDate);
+			brVO.setBr_isbn(bk_isbn);
+			brVO.setBr_bcode(bu_code);
+			brVO.setBr_price(1000);
+			
+			int result = brSer.insert(brVO);
+			if(result > 0 ) {
+				out.println("대여성공");
+			} else {
+				out.println("대여실퓨ㅐ");
+			}
+			out.close();
 			
 		} else if (subPath.equals("/return")) {
 			// 반납하기

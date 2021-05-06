@@ -219,8 +219,37 @@ public class BookRentServiceImplV1 implements BookRentService {
 	}
 
 	@Override
-	public void insert(BookRentVO bookRentVO) {
-		// TODO Auto-generated method stub
+	public int insert(BookRentVO bookRentVO) {
+		// TODO 도서 대여 정보 저장.추가
+		
+		//BookRentVO bookRentVO = new BookRentVO() ;
+		
+		String sql = " INSERT INTO tbl_book_rent ";
+		sql += " (br_seq, br_sdate, br_isbn, br_bcode,br_price) ";
+		sql += "  VALUES(seq_book_rent.NEXTVAL, ?, ?, ?, ? ) " ;
+		
+		PreparedStatement pStr = null ;
+		try {
+			pStr = dbConn.prepareStatement(sql);
+			pStr.setString(1, bookRentVO.getBr_sdate());
+			pStr.setString(2, bookRentVO.getBr_isbn());
+			pStr.setString(3, bookRentVO.getBr_bcode());
+			pStr.setInt(4, bookRentVO.getBr_price());
+			//인설트,업데이트,델리트와 같은 SQL은
+			//executeUpdate 메소드로 처리
+			//정상적으로 SQL이 성공하면 result에는 0보다 큰 값이 담긴다.
+			int result = pStr.executeUpdate();
+			pStr.close();
+			return result;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return 0 ;
+		
 
 	}
 

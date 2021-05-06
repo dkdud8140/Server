@@ -16,7 +16,8 @@
 	<p>================================================<br/>
 	
 	<h3>도서명을 입력하세요</h3>
-	<form>
+	<form action="book">
+		<input name = "bu_code" value = "${BUYER.bu_code}"/>
 		<input name = "bk_title"/>
 		<button>검색</button>
 	</form>

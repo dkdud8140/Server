@@ -39,7 +39,7 @@ public interface BookRentService {
 	// Prepare...를 통해서 dql을 실행하면
 	// CUR가 정상적으로 수행되면 결과값이 정수 1이상 돌아오고
 	// 	그렇지 못하면 0값이 되돌아 온다.
-	public void insert(BookRentVO bookRentVO);
+	public int insert(BookRentVO bookRentVO);
 	public void update(BookRentVO bookRentVO);
 	public int delete(Long seq);
 	
