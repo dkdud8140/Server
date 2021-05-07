@@ -223,6 +223,7 @@ public class BookRentController extends HttpServlet {
 			int result = brSer.insert(brVO);
 			if(result > 0 ) {
 				out.println("대여성공");
+				resp.sendRedirect("/book/");
 			} else {
 				out.println("대여실퓨ㅐ");
 			}
