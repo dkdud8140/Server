@@ -64,7 +64,25 @@ public class FoodServiceImplV1 implements FoodService {
 
 	@Override
 	public FoodDTO findById(String fd_code) {
-		// TODO Auto-generated method stub
+		// TODO 식품코드로 입력하기
+		String sql = " SELECT * FROM view_식품정보 ";
+		sql += " WHERE 식품코드 = ? ";
+		
+		PreparedStatement pStr = null ;
+		
+		
+		try {
+			pStr = dbConn.prepareStatement(sql);
+			pStr.setString(1, fd_code);
+			List<FoodDTO> fList = this.select(pStr);
+			if(fList != null && fList.size() > 0) {
+				return fList.get(0);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 

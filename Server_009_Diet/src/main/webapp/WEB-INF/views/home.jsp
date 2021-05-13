@@ -5,6 +5,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	h1 {
+		background-color: #3EADBB;
+		color : #fff ;
+		padding : 1.2rem ; 
+		text-align: center;
+	}
+	
+	a {
+		text-decoration: none ;
+	}
+	
+	
+	/*
+	CSS 3를 사용한 interactive 스타일 지정
+	동적(Dynamic) 스타일 지정
+	*/
+	a:hover {
+		color: 	#FF4500;
+		background-color: #ddd ;
+	}
+
+
+
+</style>
+
 </head>
 <body>
 	<h1>🏃‍♀️다이어트를 도와줘🏃‍♀️</h1>
