@@ -41,7 +41,7 @@ import javax.servlet.annotation.WebFilter;
  *  urlPatterns = "/food"로 설정하면
  *  localhost:8080/diet/food로 요청하는 부분만 처리
  */
-@WebFilter(urlPatterns = "/*")
+ @WebFilter(urlPatterns = "/*")
 public class KoreaFilter implements Filter{
 
 	@Override
@@ -58,7 +58,7 @@ public class KoreaFilter implements Filter{
 		 */
 		
 		req.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html;charset=UTF-8");
+//		resp.setContentType("text/html;charset=UTF-8");
 		chain.doFilter(req, resp);
 		
 	}
