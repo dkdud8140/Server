@@ -15,35 +15,32 @@ import com.callor.diet.service.impl.MyFoodServiceImplV1;
 
 @WebServlet("/")
 public class HomeController extends HttpServlet{
-	
-	private static final long serialVersionUID = -953531494441799347L;
 
-	protected MyFoodService mfS ;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected MyFoodService mfService;
 	public HomeController() {
-		mfS = new MyFoodServiceImplV1();
+		mfService = new MyFoodServiceImplV1();
 	}
-	
-	
-	
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		req.getRequestDispatcher(
+//				"/WEB-INF/views/home.jsp")
+//		.forward(req, resp);
 
-		//웹 브라우저를 처음 열었을 때 보여지는 화면
-		//req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
-	
 		String mf_date = req.getParameter("mf_date");
-		List<MyFoodCDTO> mfList = null ;
+		List<MyFoodCDTO> mfList = null;
 		if(mf_date == null || mf_date.equals("")) {
-			mfList = mfS.selectAll();
+			 mfList = mfService.selectAll();
 		} else {
-			mfList = mfS.findByDate(mf_date);
+			mfList = mfService.findByDate(mf_date);
 		}
-
 		req.setAttribute("MFOODS", mfList);
 		ReqController.forward(req, resp, "home");
+		
 	}
-
-	
 }
+
