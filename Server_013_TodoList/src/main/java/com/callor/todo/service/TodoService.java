@@ -6,7 +6,7 @@ import java.util.Map;
 public interface TodoService {
 
 	public List<Map<String, Object>> selectAll();
-	public Map<String, Object> findById();
+	public Map<String, Object> findById(Long seq);
 	
 	public Integer insert(Map<String, Object> vo);
 	public Integer update(Map<String, Object> vo);
